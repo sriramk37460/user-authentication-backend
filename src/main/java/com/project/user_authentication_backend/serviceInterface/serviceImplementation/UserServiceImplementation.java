@@ -132,4 +132,64 @@ public class UserServiceImplementation implements UserService {
         }
         return ListOfUser;
     }
+
+    @Override
+    public ProfileDTO getProfile() {
+        return null;
+    }
+
+    @Override
+    public List<UserRequestDTO> getNotAccessUser() {
+        return List.of();
+    }
+
+    @Override
+    public List<UserRequestDTO> getPasswordRequestUser() {
+        return List.of();
+    }
+
+    @Override
+    public List<UserRequestDTO> getEmailRequestUser() {
+        return List.of();
+    }
+
+    @Override
+    public String resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) {
+        return "";
+    }
+
+    @Override
+    public String resetPassword(PasswordResetDTO passwordResetDTO) {
+        return "";
+    }
+
+    @Override
+    public String editEmailRequest(EmailRequestDTO emailRequestDTO) {
+        return "";
+    }
+
+    @Override
+    public String editEmail(ChangeEmailDTO changeEmailDTO) {
+        return "";
+    }
+
+    @Override
+    public String resetPasswordPermission(List<UserEditDTO> userEditDTOs){
+        return "";
+    }
+
+    @Override
+    public String editEmailPermission(List<UserEditDTO> userEditDTOs) {
+        return "";
+    }
+
+    @Override
+    public String accessPermission(List<UserEditDTO> userEditDTOs){
+        return "";
+    }
+
+    @Override
+    public String removeAccessPermission(UserEditDTO userEditDTO){
+        return "";
+    }
 }
