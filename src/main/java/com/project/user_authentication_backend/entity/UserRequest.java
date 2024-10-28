@@ -1,27 +1,22 @@
 package com.project.user_authentication_backend.entity;
 
-
-
 import com.project.user_authentication_backend.entity.Enum.RoleEnum;
-import com.project.user_authentication_backend.entity.entityListeners.UserEntityListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(UserEntityListener.class)
-@Table(name = "user_table")
-public class User {
-
+@Table(name = "user_request_table")
+public class UserRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id",unique = true)
+    @Column(name = "user_request_id",unique = true)
+    private int userRequestId;
+    @Column(name = "user_id")
     private int userId;
     @Column(name = "user_name")
     private String userName;
@@ -42,16 +37,8 @@ public class User {
     private boolean isEmailRequest;
     @Column(name = "access_given")
     private boolean accessGiven;
-    @Column(name = "is_admin")
-    private boolean isAdmin;
-    @Column(name = "created_by")
-    private String createdBy;
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-    @Column(name = "modified_by")
-    private String modifiedBy;
-    @Column(name = "modified_at")
-    private Timestamp modifiedAt;
-
+    @Column(name = "allow_request")
+    private boolean allowRequest;
 
 }
+
