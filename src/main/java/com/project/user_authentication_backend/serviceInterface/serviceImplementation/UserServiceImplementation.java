@@ -158,19 +158,57 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<UserRequestDTO> getNotAccessUser() {
-        return List.of();
+        List<UserRequest> UserList = userRequestRepository.findNotAccessUser();
+        List<UserRequestDTO> ListOfUser = new ArrayList<>();
+        for (UserRequest user : UserList) {
+            UserRequestDTO userDTO = new UserRequestDTO();
+            userDTO.setUserName(user.getUserName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setPassword(user.getPassword());
+            userDTO.setAccessGiven(user.isAccessGiven());
+            userDTO.setEmailRequest(user.isEmailRequest());
+            userDTO.setPasswordRequest(user.isPasswordRequest());
+            ListOfUser.add(userDTO);
+        }
+        return ListOfUser;
     }
 
     @Override
     public List<UserRequestDTO> getPasswordRequestUser() {
-        return List.of();
+        List<UserRequest> UserList = userRequestRepository.findPasswordRequestUser();
+        List<UserRequestDTO> ListOfUser = new ArrayList<>();
+        for (UserRequest user : UserList) {
+            UserRequestDTO userDTO = new UserRequestDTO();
+            userDTO.setUserName(user.getUserName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setPassword(user.getPassword());
+            userDTO.setAccessGiven(user.isAccessGiven());
+            userDTO.setEmailRequest(user.isEmailRequest());
+            userDTO.setPasswordRequest(user.isPasswordRequest());
+            ListOfUser.add(userDTO);
+        }
+        return ListOfUser;
     }
 
     @Override
     public List<UserRequestDTO> getEmailRequestUser() {
-        return List.of();
+        List<UserRequest> UserList = userRequestRepository.findEmailRequestUser();
+        List<UserRequestDTO> ListOfUser = new ArrayList<>();
+        for (UserRequest user : UserList) {
+            UserRequestDTO userDTO = new UserRequestDTO();
+            userDTO.setUserName(user.getUserName());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setPassword(user.getPassword());
+            userDTO.setAccessGiven(user.isAccessGiven());
+            userDTO.setEmailRequest(user.isEmailRequest());
+            userDTO.setPasswordRequest(user.isPasswordRequest());
+            ListOfUser.add(userDTO);
+        }
+        return ListOfUser;
     }
-
     @Override
     public String resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) {
         return "";
