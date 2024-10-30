@@ -10,6 +10,7 @@ import com.project.user_authentication_backend.entity.UserRequest;
 import com.project.user_authentication_backend.exception.customExceptions.PasswordWrongException;
 import com.project.user_authentication_backend.exception.customExceptions.UserAlreadyFoundException;
 import com.project.user_authentication_backend.exception.customExceptions.UserNotFoundException;
+import com.project.user_authentication_backend.exception.customExceptions.UserPermissionNotFoundException;
 import com.project.user_authentication_backend.serviceInterface.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -211,14 +212,45 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public String resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) {
-        return "";
+        User userCheck = userRepository.getByEmail(passwordRequestDTO.getEmail());
+        if (userCheck == null) {
+            throw new UserNotFoundException("User Not Found With the Email");
+        } else {
+
+            if (userCheck.isAccessGiven()) {
+                UserRequest userRequest = userRequestRepository.getByEmail(passwordRequestDTO.getEmail());
+                userRequest.setAllowRequest(false);
+                userRequest.setPasswordRequest(true);
+                userRequestRepository.save(userRequest);
+            }
+        }
+        return "Request Send Successfully";
     }
 
     @Override
     public String resetPassword(PasswordResetDTO passwordResetDTO) {
-        return "";
+        User userCheck = userRepository.getByEmailWithUserId(passwordResetDTO.getEmail(), cuoConfig.getUserId());
+        if (userCheck == null) {
+            throw new UserNotFoundException("User Not Found With the Email");
+        } else {
+            if (userCheck.isAccessGiven() && userCheck.isPasswordRequest()) {
+                UserRequest userRequest = userRequestRepository.getByEmail(passwordResetDTO.getEmail());
+                if (userCheck.getPassword().equals(passwordResetDTO.getOldPassword())) {
+                    userCheck.setPassword(passwordResetDTO.getNewPassword());
+                    userCheck.setPasswordRequest(false);
+                    userRequest.setPassword(passwordResetDTO.getNewPassword());
+                    userRequest.setPasswordRequest(false);
+                    userRepository.save(userCheck);
+                    userRequestRepository.save(userRequest);
+                    return "Password Update Successfully";
+                } else {
+                    throw new PasswordWrongException("Password is Wrong");
+                }
+            } else {
+                throw new UserPermissionNotFoundException("Reset Password Permission is Not Given");
+            }
+        }
     }
-
     @Override
     public String editEmailRequest(EmailRequestDTO emailRequestDTO) {
         return "";
