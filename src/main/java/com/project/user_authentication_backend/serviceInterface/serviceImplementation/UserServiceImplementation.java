@@ -253,14 +253,41 @@ public class UserServiceImplementation implements UserService {
     }
     @Override
     public String editEmailRequest(EmailRequestDTO emailRequestDTO) {
-        return "";
+        User userCheck = userRepository.getByEmailWithUserId(emailRequestDTO.getEmail(), cuoConfig.getUserId());
+        if (userCheck == null) {
+            throw new UserNotFoundException("User Not Found With the Email");
+        } else {
+            if (userCheck.isAccessGiven()) {
+                UserRequest userRequest = userRequestRepository.getByEmail(emailRequestDTO.getEmail());
+                userRequest.setAllowRequest(false);
+                userRequest.setEmailRequest(true);
+                userRequestRepository.save(userRequest);
+            }
+        }
+        return "Request Send Successfully";
     }
 
     @Override
     public String editEmail(ChangeEmailDTO changeEmailDTO) {
-        return "";
-    }
+        User userCheck = userRepository.getByEmailWithUserId(changeEmailDTO.getEmail(), cuoConfig.getUserId());
+        if (userCheck == null) {
+            throw new UserNotFoundException("User Not Found With the Email");
+        } else {
+            if (userCheck.isAccessGiven() && userCheck.isEmailRequest() && userCheck.getEmail().equals(changeEmailDTO.getEmail())) {
+                UserRequest userRequest = userRequestRepository.getByEmail(changeEmailDTO.getEmail());
+                userCheck.setEmail(changeEmailDTO.getNewEmail());
+                userCheck.setEmailRequest(false);
+                userRequest.setEmail(changeEmailDTO.getNewEmail());
+                userRequest.setEmailRequest(false);
+                userRepository.save(userCheck);
+                userRequestRepository.save(userRequest);
+                return "Email Update Successfully";
 
+            } else {
+                throw new UserPermissionNotFoundException("Email Change Permission is Not Given");
+            }
+        }
+    }
     @Override
     public String resetPasswordPermission(List<UserEditDTO> userEditDTOs){
         return "";
