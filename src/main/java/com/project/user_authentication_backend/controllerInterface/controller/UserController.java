@@ -4,6 +4,7 @@ import com.project.user_authentication_backend.controllerInterface.UserInterface
 import com.project.user_authentication_backend.dao.UserRepository;
 import com.project.user_authentication_backend.dto.*;
 import com.project.user_authentication_backend.serviceInterface.UserService;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,20 +57,20 @@ public class UserController implements UserInterface {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getNotAccessUser()));
     }
 
-    @Override
-    public ResponseEntity<ResponseDTO> getPasswordRequestUser() {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getPasswordRequestUser()));
-    }
+//    @Override
+//    public ResponseEntity<ResponseDTO> getPasswordRequestUser() {
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getPasswordRequestUser()));
+//    }
 
 //    @Override
 //    public ResponseEntity<ResponseDTO> getPhoneNumberRequestUser() {
 //        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getPhoneNumberRequestUser()));
 //    }
 
-    @Override
-    public ResponseEntity<ResponseDTO> getEmailRequestUser() {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getEmailRequestUser()));
-    }
+//    @Override
+//    public ResponseEntity<ResponseDTO> getEmailRequestUser() {
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.getEmailRequestUser()));
+//    }
 //first time login
 
 //    @Override
@@ -78,7 +79,7 @@ public class UserController implements UserInterface {
 //    }
 
     @Override
-    public ResponseEntity<ResponseDTO> resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) {
+    public ResponseEntity<ResponseDTO> resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) throws MessagingException {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.resetPasswordRequest(passwordRequestDTO)));
     }
 
@@ -87,7 +88,7 @@ public class UserController implements UserInterface {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.resetPassword(passwordResetDTO)));
     }
 
-    //    @Override
+//    @Override
 //    public ResponseEntity<ResponseDTO> editPhoneNumberRequest(PhoneNumberRequestDTO phoneNumberRequestDTO) {
 //        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editPhoneNumberRequest(phoneNumberRequestDTO)));
 //    }
@@ -96,38 +97,38 @@ public class UserController implements UserInterface {
 //    public ResponseEntity<ResponseDTO> editPhoneNumber(ChangePhoneNumberDTO changePhoneNumberDTO) {
 //        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editPhoneNumber(changePhoneNumberDTO)));
 //    }
-    @Override
-    public ResponseEntity<ResponseDTO> editEmailRequest(EmailRequestDTO emailRequestDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmailRequest(emailRequestDTO)));
-    }
+//   @Override
+//   public ResponseEntity<ResponseDTO> editEmailRequest(EmailRequestDTO emailRequestDTO) {
+//      return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmailRequest(emailRequestDTO)));
+//   }
+//
+//    @Override
+//    public ResponseEntity<ResponseDTO> editEmail(ChangeEmailDTO changeEmailDTO) {
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmail(changeEmailDTO)));
+//    }
 
-    @Override
-    public ResponseEntity<ResponseDTO> editEmail(ChangeEmailDTO changeEmailDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmail(changeEmailDTO)));
-    }
+//    @Override
+//    public ResponseEntity<ResponseDTO> resetPasswordPermission(List<UserEditDTO> userEditDTOs) throws MessagingException {
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.resetPasswordPermission(userEditDTOs)));
+//    }
 
-    @Override
-    public ResponseEntity<ResponseDTO> resetPasswordPermission(List<UserEditDTO> userEditDTOs){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.resetPasswordPermission(userEditDTOs)));
-    }
-
-    //    @Override
+//    @Override
 //    public ResponseEntity<ResponseDTO> editPhoneNumberPermission(UserEditDTO userEditDTO) {
 //        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editPhoneNumberPermission(userEditDTO)));
 //    }
+//   @Override
+//   public ResponseEntity<ResponseDTO> editEmailPermission(List<UserEditDTO> userEditDTOs) throws MessagingException {
+//      return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmailPermission(userEditDTOs)));
+//   }
+
     @Override
-    public ResponseEntity<ResponseDTO> editEmailPermission(List<UserEditDTO> userEditDTOs){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.editEmailPermission(userEditDTOs)));
+    public ResponseEntity<ResponseDTO> accessPermission(List<EmailDTO> emailDTOS) throws MessagingException {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.accessPermission(emailDTOS)));
     }
 
     @Override
-    public ResponseEntity<ResponseDTO> accessPermission(List<UserEditDTO> userEditDTOs) {
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.accessPermission(userEditDTOs)));
-    }
-
-    @Override
-    public ResponseEntity<ResponseDTO> removeAccessPermission(UserEditDTO userEditDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.removeAccessPermission(userEditDTO)));
+    public ResponseEntity<ResponseDTO> removeAccessPermission(EmailDTO emailDTO) throws MessagingException {
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO("Check The Data field",userService.removeAccessPermission(emailDTO)));
     }
 
 
