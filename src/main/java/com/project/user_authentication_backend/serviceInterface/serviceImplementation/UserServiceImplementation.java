@@ -12,6 +12,7 @@ import com.project.user_authentication_backend.exception.customExceptions.UserAl
 import com.project.user_authentication_backend.exception.customExceptions.UserNotFoundException;
 import com.project.user_authentication_backend.exception.customExceptions.UserPermissionNotFoundException;
 import com.project.user_authentication_backend.serviceInterface.UserService;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -175,41 +176,41 @@ public class UserServiceImplementation implements UserService {
         return ListOfUser;
     }
 
-    @Override
-    public List<UserRequestDTO> getPasswordRequestUser() {
-        List<UserRequest> UserList = userRequestRepository.findPasswordRequestUser();
-        List<UserRequestDTO> ListOfUser = new ArrayList<>();
-        for (UserRequest user : UserList) {
-            UserRequestDTO userDTO = new UserRequestDTO();
-            userDTO.setUserName(user.getUserName());
-            userDTO.setEmail(user.getEmail());
-            userDTO.setPhoneNumber(user.getPhoneNumber());
-            userDTO.setPassword(user.getPassword());
-            userDTO.setAccessGiven(user.isAccessGiven());
-            userDTO.setEmailRequest(user.isEmailRequest());
-            userDTO.setPasswordRequest(user.isPasswordRequest());
-            ListOfUser.add(userDTO);
-        }
-        return ListOfUser;
-    }
+//    @Override
+//    public List<UserRequestDTO> getPasswordRequestUser() {
+//        List<UserRequest> UserList = userRequestRepository.findPasswordRequestUser();
+//        List<UserRequestDTO> ListOfUser = new ArrayList<>();
+//        for (UserRequest user : UserList) {
+//            UserRequestDTO userDTO = new UserRequestDTO();
+//            userDTO.setUserName(user.getUserName());
+//            userDTO.setEmail(user.getEmail());
+//            userDTO.setPhoneNumber(user.getPhoneNumber());
+//            userDTO.setPassword(user.getPassword());
+//            userDTO.setAccessGiven(user.isAccessGiven());
+//            userDTO.setEmailRequest(user.isEmailRequest());
+//            userDTO.setPasswordRequest(user.isPasswordRequest());
+//            ListOfUser.add(userDTO);
+//        }
+//        return ListOfUser;
+//    }
 
-    @Override
-    public List<UserRequestDTO> getEmailRequestUser() {
-        List<UserRequest> UserList = userRequestRepository.findEmailRequestUser();
-        List<UserRequestDTO> ListOfUser = new ArrayList<>();
-        for (UserRequest user : UserList) {
-            UserRequestDTO userDTO = new UserRequestDTO();
-            userDTO.setUserName(user.getUserName());
-            userDTO.setEmail(user.getEmail());
-            userDTO.setPhoneNumber(user.getPhoneNumber());
-            userDTO.setPassword(user.getPassword());
-            userDTO.setAccessGiven(user.isAccessGiven());
-            userDTO.setEmailRequest(user.isEmailRequest());
-            userDTO.setPasswordRequest(user.isPasswordRequest());
-            ListOfUser.add(userDTO);
-        }
-        return ListOfUser;
-    }
+//    @Override
+//    public List<UserRequestDTO> getEmailRequestUser() {
+//        List<UserRequest> UserList = userRequestRepository.findEmailRequestUser();
+//        List<UserRequestDTO> ListOfUser = new ArrayList<>();
+//        for (UserRequest user : UserList) {
+//            UserRequestDTO userDTO = new UserRequestDTO();
+//            userDTO.setUserName(user.getUserName());
+//            userDTO.setEmail(user.getEmail());
+//            userDTO.setPhoneNumber(user.getPhoneNumber());
+//            userDTO.setPassword(user.getPassword());
+//            userDTO.setAccessGiven(user.isAccessGiven());
+//            userDTO.setEmailRequest(user.isEmailRequest());
+//            userDTO.setPasswordRequest(user.isPasswordRequest());
+//            ListOfUser.add(userDTO);
+//        }
+//        return ListOfUser;
+//    }
     @Override
     public String resetPasswordRequest(PasswordRequestDTO passwordRequestDTO) {
         User userCheck = userRepository.getByEmail(passwordRequestDTO.getEmail());
@@ -251,62 +252,54 @@ public class UserServiceImplementation implements UserService {
             }
         }
     }
-    @Override
-    public String editEmailRequest(EmailRequestDTO emailRequestDTO) {
-        User userCheck = userRepository.getByEmailWithUserId(emailRequestDTO.getEmail(), cuoConfig.getUserId());
-        if (userCheck == null) {
-            throw new UserNotFoundException("User Not Found With the Email");
-        } else {
-            if (userCheck.isAccessGiven()) {
-                UserRequest userRequest = userRequestRepository.getByEmail(emailRequestDTO.getEmail());
-                userRequest.setAllowRequest(false);
-                userRequest.setEmailRequest(true);
-                userRequestRepository.save(userRequest);
-            }
-        }
-        return "Request Send Successfully";
-    }
 
     @Override
-    public String editEmail(ChangeEmailDTO changeEmailDTO) {
-        User userCheck = userRepository.getByEmailWithUserId(changeEmailDTO.getEmail(), cuoConfig.getUserId());
-        if (userCheck == null) {
-            throw new UserNotFoundException("User Not Found With the Email");
-        } else {
-            if (userCheck.isAccessGiven() && userCheck.isEmailRequest() && userCheck.getEmail().equals(changeEmailDTO.getEmail())) {
-                UserRequest userRequest = userRequestRepository.getByEmail(changeEmailDTO.getEmail());
-                userCheck.setEmail(changeEmailDTO.getNewEmail());
-                userCheck.setEmailRequest(false);
-                userRequest.setEmail(changeEmailDTO.getNewEmail());
-                userRequest.setEmailRequest(false);
-                userRepository.save(userCheck);
-                userRequestRepository.save(userRequest);
-                return "Email Update Successfully";
-
-            } else {
-                throw new UserPermissionNotFoundException("Email Change Permission is Not Given");
-            }
-        }
-    }
-    @Override
-    public String resetPasswordPermission(List<UserEditDTO> userEditDTOs){
+    public String accessPermission(List<EmailDTO> emailDTOS) throws MessagingException {
         return "";
     }
 
     @Override
-    public String editEmailPermission(List<UserEditDTO> userEditDTOs) {
+    public String removeAccessPermission(EmailDTO emailDTO) throws MessagingException {
         return "";
     }
+//    @Override
+//    public String editEmailRequest(EmailRequestDTO emailRequestDTO) {
+//        User userCheck = userRepository.getByEmailWithUserId(emailRequestDTO.getEmail(), cuoConfig.getUserId());
+//        if (userCheck == null) {
+//            throw new UserNotFoundException("User Not Found With the Email");
+//        } else {
+//            if (userCheck.isAccessGiven()) {
+//                UserRequest userRequest = userRequestRepository.getByEmail(emailRequestDTO.getEmail());
+//                userRequest.setAllowRequest(false);
+//                userRequest.setEmailRequest(true);
+//                userRequestRepository.save(userRequest);
+//            }
+//        }
+//        return "Request Send Successfully";
+//    }
 
-    @Override
-    public String accessPermission(List<UserEditDTO> userEditDTOs){
-        return "";
-    }
+//    @Override
+//    public String editEmail(ChangeEmailDTO changeEmailDTO) {
+//        User userCheck = userRepository.getByEmailWithUserId(changeEmailDTO.getEmail(), cuoConfig.getUserId());
+//        if (userCheck == null) {
+//            throw new UserNotFoundException("User Not Found With the Email");
+//        } else {
+//            if (userCheck.isAccessGiven() && userCheck.isEmailRequest() && userCheck.getEmail().equals(changeEmailDTO.getEmail())) {
+//                UserRequest userRequest = userRequestRepository.getByEmail(changeEmailDTO.getEmail());
+//                userCheck.setEmail(changeEmailDTO.getNewEmail());
+//                userCheck.setEmailRequest(false);
+//                userRequest.setEmail(changeEmailDTO.getNewEmail());
+//                userRequest.setEmailRequest(false);
+//                userRepository.save(userCheck);
+//                userRequestRepository.save(userRequest);
+//                return "Email Update Successfully";
+//
+//            } else {
+//                throw new UserPermissionNotFoundException("Email Change Permission is Not Given");
+//            }
+//        }
+//    }
 
-    @Override
-    public String removeAccessPermission(UserEditDTO userEditDTO){
-        return "";
-    }
     public static void UserToUserRequestDetails(User user, UserRequest userRequest) {
         userRequest.setUserId(user.getUserId());
         userRequest.setUserName(user.getUserName());

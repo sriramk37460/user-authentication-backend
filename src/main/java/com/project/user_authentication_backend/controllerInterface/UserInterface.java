@@ -1,6 +1,7 @@
 package com.project.user_authentication_backend.controllerInterface;
 
 import com.project.user_authentication_backend.dto.*;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,34 +26,34 @@ public interface UserInterface {
     //need to implement
     @GetMapping("/admin/getAccessNotAllowedUserList")
     ResponseEntity<ResponseDTO> getNotAccessUser();
-    @GetMapping("/admin/getPasswordRequestUserList")
-    ResponseEntity<ResponseDTO> getPasswordRequestUser();
-    //    @GetMapping("/admin/getPhoneNumberRequestUserList")
+    //    @GetMapping("/admin/getPasswordRequestUserList")
+//    ResponseEntity<ResponseDTO> getPasswordRequestUser();
+//    @GetMapping("/admin/getPhoneNumberRequestUserList")
 //    ResponseEntity<ResponseDTO> getPhoneNumberRequestUser();
-    @GetMapping("/admin/getEmailRequestUserList")
-    ResponseEntity<ResponseDTO> getEmailRequestUser();
-    //    @PutMapping("/updatePassword")
+//    @GetMapping("/admin/getEmailRequestUserList")
+//    ResponseEntity<ResponseDTO> getEmailRequestUser();
+//    @PutMapping("/updatePassword")
 //    ResponseEntity<ResponseDTO> editPassword(@RequestBody FirstTimeLoginDTO firstTimeLoginDTO);
     @PostMapping("/public/resetPasswordRequest")
-    ResponseEntity<ResponseDTO> resetPasswordRequest(@RequestBody PasswordRequestDTO passwordRequestDTO);
-    @PutMapping("/resetPassword")
+    ResponseEntity<ResponseDTO> resetPasswordRequest(@RequestBody PasswordRequestDTO passwordRequestDTO) throws MessagingException;
+    @PutMapping("public/resetPassword")
     ResponseEntity<ResponseDTO> resetPassword(@RequestBody PasswordResetDTO passwordResetDTO);
     //    @PutMapping("/phoneNumberChangeRequest")
 //    ResponseEntity<ResponseDTO> editPhoneNumberRequest(@RequestBody PhoneNumberRequestDTO phoneNumberRequestDTO);
 //    @PutMapping("/changePhoneNumber")
 //    ResponseEntity<ResponseDTO> editPhoneNumber(@RequestBody ChangePhoneNumberDTO changePhoneNumberDTO);
-    @PostMapping("/emailChangeRequest")
-    ResponseEntity<ResponseDTO> editEmailRequest(@RequestBody EmailRequestDTO emailRequestDTO);
-    @PutMapping("/changeEmail")
-    ResponseEntity<ResponseDTO> editEmail(@RequestBody ChangeEmailDTO changeEmailDTO);
-    @PutMapping("/admin/allowResetPassword")
-    ResponseEntity<ResponseDTO> resetPasswordPermission(@RequestBody List<UserEditDTO> userEditDTOs);
-    //    @PutMapping("/admin/allowChangePhoneNumber")
+//    @PostMapping("/emailChangeRequest")
+//    ResponseEntity<ResponseDTO> editEmailRequest(@RequestBody EmailRequestDTO emailRequestDTO);
+//    @PutMapping("/changeEmail")
+//    ResponseEntity<ResponseDTO> editEmail(@RequestBody ChangeEmailDTO changeEmailDTO);
+//    @PutMapping("/admin/allowResetPassword")
+//    ResponseEntity<ResponseDTO> resetPasswordPermission(@RequestBody List<UserEditDTO> userEditDTOs) throws MessagingException;
+//    @PutMapping("/admin/allowChangePhoneNumber")
 //    ResponseEntity<ResponseDTO> editPhoneNumberPermission(@RequestBody UserEditDTO userEditDTO);
-    @PutMapping("/admin/allowChangeEmail")
-    ResponseEntity<ResponseDTO> editEmailPermission(@RequestBody List<UserEditDTO> userEditDTOs);
+//    @PutMapping("/admin/allowChangeEmail")
+//    ResponseEntity<ResponseDTO> editEmailPermission(@RequestBody List<UserEditDTO> userEditDTOs) throws MessagingException;
     @PutMapping("/admin/allowAccess")
-    ResponseEntity<ResponseDTO> accessPermission(@RequestBody List<UserEditDTO> userEditDTOs);
+    ResponseEntity<ResponseDTO> accessPermission(@RequestBody List<EmailDTO> emailDTOS) throws MessagingException;
     @PutMapping("/admin/removeAccess")
-    ResponseEntity<ResponseDTO> removeAccessPermission(@RequestBody UserEditDTO userEditDTO);
+    ResponseEntity<ResponseDTO> removeAccessPermission(@RequestBody EmailDTO emailDTO) throws MessagingException;
 }
