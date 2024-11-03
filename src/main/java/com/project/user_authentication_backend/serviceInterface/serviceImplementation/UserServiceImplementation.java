@@ -28,6 +28,7 @@ public class UserServiceImplementation implements UserService {
     private final UserRepository userRepository;
     private final UserRequestRepository userRequestRepository;
     private final CUOConfig cuoConfig;
+    private final EmailService emailService;
 
     @Override
     public String createUser(UserRegisterDTO userRegisterDTO) {
@@ -255,7 +256,27 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public String accessPermission(List<EmailDTO> emailDTOS) throws MessagingException {
-        return "";
+        for (EmailDTO user : emailDTOS) {
+            User userCheck = userRepository.getByEmail(user.getEmail());
+            if (userCheck != null) {
+
+                userCheck.setAccessGiven(true);
+                UserRequest userRequest = userRequestRepository.getByEmail(userCheck.getEmail());
+                userRequest.setAccessGiven(true);
+                userRequest.setAllowRequest(true);
+                userRequestRepository.save(userRequest);
+                userRepository.save(userCheck);
+                String subject = "Access Given Notification";
+                String body = "Hello " + userCheck.getUserName() + ",<br><br>" +
+                        "Your request has been allowed. Please log in first to use the application.<br><br>" +
+                        "If you have any questions or need further assistance, feel free to reach out.<br><br>" +
+                        "Best regards,<br>" +
+                        "Your Support Team";
+                // Send email as HTML
+                emailService.sendEmail(userCheck.getEmail(), subject, body);
+            }
+        }
+        return "Access Permission Set Successfully";
     }
 
     @Override
