@@ -1,7 +1,8 @@
 package com.project.user_authentication_backend.config;
 
-import com.myproject.userauthentication.dao.UserRepository;
-import com.myproject.userauthentication.entity.User;
+
+import com.project.user_authentication_backend.dao.UserRepository;
+import com.project.user_authentication_backend.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
