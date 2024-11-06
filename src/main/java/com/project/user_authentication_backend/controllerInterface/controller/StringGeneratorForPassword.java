@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
 @Component
-
 public class StringGeneratorForPassword {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom RANDOM = new SecureRandom();

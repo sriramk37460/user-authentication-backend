@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Allow this origin for this controller
 public class UserController implements UserInterface {
 
     private final UserService userService;
