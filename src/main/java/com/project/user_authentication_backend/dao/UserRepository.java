@@ -17,13 +17,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "SELECT * FROM user_table WHERE phone_number=?1",nativeQuery = true)
     User getByPhoneNumber(String phoneNumber);
 
-//    @Query(value = "SELECT * FROM user_table where email=?1 AND password_request=true AND access_given=true",nativeQuery = true)
-//    User getByEmailWithIsPasswordRequest(String email);
-
     @Query(value = "SELECT * FROM user_table WHERE email=?1",nativeQuery = true)
     User getByEmail(String email);
-    @Query(value = "SELECT * FROM user_table WHERE email=?1 AND user_id=?2",nativeQuery = true)
-    User getByEmailWithUserId(String email,int userId);
+    @Query(value = "SELECT * FROM user_table WHERE user_id=?1",nativeQuery = true)
+    User getByUserId(int userId);
     @Query(value = "SELECT * FROM user_table WHERE email=?1 AND access_given=true",nativeQuery = true)
     User getByEmailWithAccess(String email);
 
@@ -34,4 +31,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     List<User> findAllUser();
     @Query(value = "SELECT * FROM user_table WHERE user_id=?1 ",nativeQuery = true)
     Optional<User> findById(int userId);
+    @Query(value = "SELECT * FROM user_table WHERE reset_token=?1",nativeQuery = true)
+    User findByResetToken(String resetToken);
 }
