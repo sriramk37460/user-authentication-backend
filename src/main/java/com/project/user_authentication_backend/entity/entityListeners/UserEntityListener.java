@@ -7,7 +7,6 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.time.Instant;
 

@@ -1,6 +1,6 @@
 package com.project.user_authentication_backend.exception;
 
-import com.myproject.userauthentication.exception.customExceptions.*;
+import com.project.user_authentication_backend.exception.customExceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -51,6 +51,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyFoundException.class)
     public ResponseEntity<Object> handleUserAlreadyFoundException(UserAlreadyFoundException ex,WebRequest webRequest){
+        Map<String,Object> body = new HashMap<>();
+        body.put("timestamp",System.currentTimeMillis());
+        body.put("message",ex.getMessage());
+
+        return new ResponseEntity<>(body,HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(TokenInvalidException.class)
+    public ResponseEntity<Object> handleTokenInvalidException(TokenInvalidException ex,WebRequest webRequest){
         Map<String,Object> body = new HashMap<>();
         body.put("timestamp",System.currentTimeMillis());
         body.put("message",ex.getMessage());
