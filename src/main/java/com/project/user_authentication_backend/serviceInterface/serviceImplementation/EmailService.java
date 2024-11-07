@@ -7,7 +7,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class EmailService {
     @Autowired
@@ -16,11 +15,12 @@ public class EmailService {
     public void sendEmail(String to, String subject, String body) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true); // true indicates multipart message
-
-        helper.setFrom(""); // Set your sender email here
+        // Set your sender email here
+        helper.setFrom("");
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setText(body, true); // Set to true if you want to send HTML content
+        // Set to true if you want to send HTML content
+        helper.setText(body, true);
 
         javaMailSender.send(message);
     }

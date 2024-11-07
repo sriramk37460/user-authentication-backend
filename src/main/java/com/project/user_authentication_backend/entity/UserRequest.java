@@ -31,8 +31,8 @@ public class UserRequest {
     private RoleEnum role;
     //    @Column(name = "first_time_login")
 //    private boolean isFirstTimeLogin;
-    @Column(name = "password_request")
-    private boolean isPasswordRequest;
+//    @Column(name = "password_request")
+//    private boolean isPasswordRequest;
     @Column(name = "email_request")
     private boolean isEmailRequest;
     @Column(name = "access_given")
@@ -41,4 +41,3 @@ public class UserRequest {
     private boolean allowRequest;
 
 }
-

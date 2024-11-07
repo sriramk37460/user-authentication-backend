@@ -14,7 +14,6 @@ public interface UserService {
     List<UserDTO> getAllUser();
     ProfileDTO getProfile();
 
-    //need to implement
     List<UserRequestDTO>  getNotAccessUser();
     //    List<UserRequestDTO>  getPasswordRequestUser();
 //    List<UserRequestDTO>  getPhoneNumberRequestUser();

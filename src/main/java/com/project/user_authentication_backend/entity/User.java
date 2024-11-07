@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -44,6 +45,19 @@ public class User {
     private boolean accessGiven;
     @Column(name = "is_admin")
     private boolean isAdmin;
+
+
+    @Column(name = "token_generated_at")
+    private LocalDateTime tokenGeneratedAt;
+
+    // Store password reset token
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    // Store expiration time for the reset token
+    @Column(name = "reset_token_expiration")
+    private LocalDateTime resetTokenExpiration;
+
     @Column(name = "created_by")
     private String createdBy;
     @Column(name = "created_at")
