@@ -5,11 +5,8 @@ import lombok.Data;
 
 @Data
 public class SignInResponseDTO {
-
     private String signInStatus;
     private String accessToken;
     private String userName;
     private int userId;
-    private boolean firstTimeLogin;
-
 }
