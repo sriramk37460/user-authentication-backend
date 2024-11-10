@@ -13,6 +13,4 @@ public class UserEditDTO {
     private String phoneNumber;
     private String password;
     private boolean accessPermission;
-    private boolean emailChange;
-    private boolean passwordChange;
 }
